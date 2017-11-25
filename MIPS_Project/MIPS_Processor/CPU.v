@@ -6,7 +6,13 @@
  * Designer:   Chanartip Soonthornwan, Jonathan Shihata
  * Email:      Chanartip.Soonthornwan@gmail.com, JonnyShihata@gmail.com
  * Rev. No.:   Version 1.0
- * Rev. Date:  Current Rev. Date 11/17/2017
+ * Rev. Date:  Date 11/17/2017
+ *
+ * Rev. No.1:  Version 1.1
+ * Rev. Date:  Current Rev. Date 11/21/2017
+ * update:     Add wires for perform RETI and INTR (SP_Sel, S_Sel,
+ *                flag_in, flag_out).
+ *             Update MCU and IDP Port list.
  *
  * Purpose:    Top level of Instruction Unit(IU, Integer Data Path(IDP), 
  *             and Control Unit(MCU). Shows connection between modules above.
@@ -15,10 +21,10 @@
 module CPU( 
 	input       sys_clk, reset, intr,      // System clock, reset, IO_interupt
    output                   int_ack,      // IO Interrupt Acknowledge
-   //  From and To Data Memory
+   //  From and To Memory
    input  [31:0] DM_out,                  // Data output from Memory
    output [31:0] MAddr,  idp_out,         // Memory Address and Data in to memory
-	output        dm_cs,  dm_rd,  dm_wr,    // Data Memory Controls
+	output        dm_cs,  dm_rd,  dm_wr,   // Data Memory Controls
    output        io_cs,  io_rd,  io_wr    // IO Memory Controls
    );
 
@@ -28,7 +34,9 @@ module CPU(
 
    //
    //  Controls from MCU to Integer Data Path (IDP)
-   wire 		   D_En,   T_Sel,  HILO_ld;   // Register File
+   wire 		   D_En,   HILO_ld;           // Register File
+   wire  [1:0] T_Sel;                     //    Controls
+   wire        SP_Sel, S_Sel;             // Stack Pointer Control
 	wire  [1:0] pc_sel, DA_sel;            // T-MUX and DA_MUX for T or D_Addr
 	wire  [2:0] Y_Sel;                     // ALU_Out select
 	wire  [4:0] FS; 			               // Function select
@@ -36,7 +44,8 @@ module CPU(
 	// Flags status
    //  From IDP and MCU
 	wire         c,n,z,v;
-
+   wire [4:0]   flag_in, flag_out;        // input-output flag
+   
 	// Interconnection
    //    From Instruction Unit(IU) to IDP
 	wire [31:0] IR_out, pc_out, se_16;
@@ -48,8 +57,9 @@ module CPU(
             // Inputs
             .sys_clk(sys_clk), .reset(reset),   .intr(intr), 
 				.c(c), .n(n), .z(z), .v(v), 						   
-				.IR(IR_out), 											   
-				
+				.IR(IR_out), 	
+            .sp_flags_in(flag_in),
+            
             // Outputs
             .int_ack(int_ack), 									
             
@@ -60,6 +70,8 @@ module CPU(
             // Controls For Integer Data Path (IDP)
 				.D_En(D_En),       .DA_sel(DA_sel), .T_Sel(T_Sel),   
             .HILO_ld(HILO_ld), .Y_Sel(Y_Sel),   .FS(FS),
+            .SP_Sel(SP_Sel),   .S_Sel(S_Sel),   
+            .sp_flags_out(flag_out), 
             
              // Controls For Data Memory
 				.dm_cs(dm_cs),     .dm_rd(dm_rd),   .dm_wr(dm_wr),
@@ -99,9 +111,13 @@ module CPU(
             .HILO_ld(HILO_ld),   
             .DY(DM_out),                  // Input from Data Memory output
             .pc_in(pc_out),               // Input from Instruction Unit PC_out
-            .Y_Sel(Y_Sel),     
+            .Y_Sel(Y_Sel),
+            .SP_Sel(SP_Sel),              // Stack
+            .S_Sel(S_Sel),                //       Pointer Control
+            .sp_flags_in(flag_out),       //             
             
             // Outputs
+            .sp_flags_out(flag_in),       //
             .C(c),                        // Flag
             .V(v),                        //    status
             .N(n),                        //       to

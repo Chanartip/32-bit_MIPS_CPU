@@ -6,7 +6,12 @@
  * Designer:   Chanartip Soonthornwan, Jonathan Shihata
  * Email:      Chanartip.Soonthornwan@gmail.com, JonnyShihata@gmail.com
  * Rev. No.:   Version 1.0
- * Rev. Date:  Current Rev. Date 11/17/2017
+ * Rev. Date:  Date 11/17/2017
+ *
+ * Rev. No.1:  Version 1.1
+ * Rev. Date:  Current Rev. Date 11/21/2017
+ * Update:     Discarded readmemh for other DM, only left for DM14
+ *             to perform INTR and RETI
  *
  * Purpose:    Top level of CPU, Data Memory, and IO Memory.
  *             Performing as a test fixture of CPU and utilizing instruction
@@ -86,26 +91,23 @@ module CPU_Test_Module;
 		sys_clk = 0;
       sys_rst = 1;
       
-      // Bring system to 'known state'
-		@(negedge sys_clk)
-		sys_rst = 0;
-		
       //*******************************//
 		// Initialize Instruction Memory //
 		//*******************************//
 		@(negedge sys_clk)
-      /* For iMem01 - 12 Verification */
-		//$readmemh("iMem06_Sp17_commented.dat",cpu.iu.IM.Mem);    
-      
-      /* For iMem13 - 14 Verification */
-		$readmemh("iMem13_Sp17_w_isr_commented.dat",cpu.iu.IM.Mem);
+		//$readmemh("iMem12_Sp17_commented.dat",cpu.iu.IM.Mem);
+      $readmemh("iMem14_Fa17_w_isr_commented.dat",cpu.iu.IM.Mem);
       
 		//************************//
 		// Initialize Data Memory //
 		//************************//
 		@(negedge sys_clk)
-		$readmemh("dMem13_Sp17.dat",DM.Mem);
-
+		$readmemh("dMem14_Sp17.dat",DM.Mem);
+      
+      // Bring system to 'known state'
+		@(negedge sys_clk)
+		sys_rst = 0;
+		
 	end 
       
 endmodule

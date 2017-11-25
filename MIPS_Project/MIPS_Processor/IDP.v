@@ -2,7 +2,7 @@
 /****************************** C E C S  4 4 0 ******************************
  * 
  * File Name:  IDP.v
- * Project:    Lab_Assignment_4
+ * Project:    Final Project
  * Designer:   Chanartip Soonthornwan, Jonathan Shihata
  * Email:      Chanartip.Soonthornwan@gmail.com, JonnyShihata@gmail.com
  * Rev. No.:   Version 1.1
@@ -12,12 +12,17 @@
  * 
  * Rev. No.:   Version 1.2
  * Rev. Date:  Rev. 1.2 Date 10/16/2017
- * Update:     Add DA_Sel to select either D_Addr or T_Addr
+ * Update:     Added DA_Sel to select either D_Addr or T_Addr
  * 
  * Rev. No.:   Version 1.3
- * Rev. Date:  Current Rev. 1.3 Date 10/24/2017
- * Update:     Add another bit for DA_Sel to select 
+ * Rev. Date:  1.3 Date 10/24/2017
+ * Update:     Added another bit for DA_Sel to select 
  *             D_Addr, T_Addr, $ra(return Address), or $sp(stack Pointer)
+ *
+ * Rev. No.:   Version 1.4
+ * Rev. Date:  Current Rev. 1.3 Date 11/21/2017
+ * Update:     Added SP_Sel, S_Sel, sp_flags_in and sp_flags_out for
+ *             performing Stack Memory
  *
  * Purpose:    Integer Data Path (IDP) performs arithmetics calculation 
  *             from 32-bit data inside a register file and output the result.
@@ -33,7 +38,7 @@ module IDP(
    input              clk,   reset,    // On-board clock and reset signal
    input             D_En, HILO_ld,    // Load enable for regfiles
    input   [1:0]            DA_Sel,    // DA_MUX
-   input                     T_Sel,    // T-MUX select
+   input   [1:0]             T_Sel,    // T-MUX select
    input   [2:0]             Y_Sel,    // Y-MUX select
    input   [4:0]                FS,    // ALU function select
    input   [4:0]             shamt,    // Shifting amount
@@ -41,7 +46,9 @@ module IDP(
    input   [4:0]   S_Addr,  T_Addr,    // regfile Source addresses
    input   [31:0]      DT,      DY,    // Data inputs
    input   [31:0]            pc_in,    // Program Counter input
-   
+   input             S_Sel, SP_Sel,    // S_MUX and Stack Pointer Select
+   input   [4:0]       sp_flags_in,    // input stack flags
+   output  [4:0]      sp_flags_out,    // output stack flags 
    output               C, V, N, Z,    // Status flags from ALU
    output  [31:0]  ALU_OUT,  D_OUT     // Outputs
    );
@@ -53,14 +60,16 @@ module IDP(
    wire    [31:0]       rs,     rt;    // Scratch 
    wire    [31:0]  alu_out,   d_in;    //    registers  wires
    wire    [4:0]            DA_Out;    // Wire to D_Addr
-     
+   wire    [4:0]        SP_MUX_Out;    // SP_MUX output to regfile S_Addr 
+   wire    [31:0]        S_MUX_Out;    // S_MUX output to ALU S input
+   
    // Register File
    //    a memory unit for CPU
    regfile32 regfile (.clk(clk),          // On-board clock
                       .reset(reset),      // Reset signal
                       .D_En(D_En),        // Load Enable
                       .D_Addr(DA_Out),    // Writing address
-                      .S_Addr(S_Addr),    // Source S address
+                      .S_Addr(SP_MUX_Out),// Source S address
                       .T_Addr(T_Addr),    // Source T address
                       .D_in(ALU_OUT),     // Data input
                       .S(S),              // S output
@@ -76,16 +85,31 @@ module IDP(
                    (DA_Sel == 2'b10)?  5'h1F:   // 31 for $ra
                    (DA_Sel == 2'b11)?  5'h1D:   // 29 for $sp
                                       D_Addr;   // $rd default
+                                      
+   // SP_MUX
+   //    selecting either S_Addr from Instuction or
+   //    Stack Pointer's address($sp at 5'h1D)
+   assign  SP_MUX_Out = (SP_Sel)? 5'h1D: S_Addr;
+  
+   // S_MUX
+   //    selecting either rs or alu_out
+   //    and load it into S input of ALU
+   assign  S_MUX_Out = (S_Sel)? alu_out: rs;
+  
    // T-MUX
    //    selecting an output to input T of ALU
    //    if T_sel is 1, assign DT (SE_16 from Instruction Unit)
+   //                2, PC_in
+   //                3, flags from Data Memory before Interrupted
    //    otherwise assign T from regfile32
-   assign rt_in = T_Sel ? DT : T;
-   
+   assign rt_in = (T_Sel==2'b01) ? DT: 
+                  (T_Sel==2'b10) ? pc_in:
+                  (T_Sel==2'b11) ? {27'b0, sp_flags_in}: // status flags from mem
+                                   T;
    // Arithmetic Logic Unit (ALU)
    //    performs Arithmetic and logic calculation
    //    base on Function Select(FS)
-   ALU_32 alu (.S(rs),                // S input
+   ALU_32 alu (.S(S_MUX_Out),         // S input
                .T(rt),                // T input
                .FS(FS),               // Function Select(OPcode)
                .shamt(shamt),         // Shift Amount
@@ -121,6 +145,10 @@ module IDP(
                 RT (clk, reset, rt_in,      rt),
            ALU_out (clk, reset,  Y_lo, alu_out),
               D_in (clk, reset,    DY,    d_in);
+   
+   // Wire flags status to MCU
+   //    when IDP got flags from Memory(D_in)
+   assign sp_flags_out = d_in[4:0];
     
    // Y-MUX
    //    selecting output (ALU_OUT) from Y_Sel

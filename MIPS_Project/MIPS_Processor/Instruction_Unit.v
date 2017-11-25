@@ -8,11 +8,11 @@
  * Rev. No.:   Version 1.0
  * Rev. Date:  Date 10/10/2017
  *
- * Rev. No.:   Version 1.1
+ * Rev. No.1:  Version 1.1
  * Rev. Date:  Date 10/24/2017
  * update:     Get rid of [31:0] D_in, and Add pc_sel for PC_MUX
  *
- * Rev. No.:   Version 1.2
+ * Rev. No.2:  Version 1.2
  * Rev. Date:  Current Rev. Date 11/19/2017
  * update:     Adjusts Instruction Memory address pin to only
  *             get 12 bits from PC_out since the project's memory is small
