@@ -1,0 +1,20 @@
+@0
+3c 01 80 00  // main:      lui  $01, 0x8000
+34 21 ff ff  //            ori  $01, 0xFFFF        # LI   R01,  0x8000FFFF
+20 02 00 10  //            addi $02, $00, 0x10     # LI   R02,  0x10
+3c 0f 10 01  //            lui  $15, 0x1001
+35 ef 00 c0  //            ori  $15, 0x00C0        # LI   R15,  0x100100C0
+
+00 01 08 43  // top:       sra  $01, $01, 1        # logical shift right 1 bit
+ad e1 00 00  //            sw   $01, 0($15)        # ST  [R15], R01
+21 ef 00 04  //            addi $15, $15, 4        # increment the memory pointer 4 bytes
+20 42 ff ff  //            addi $02, $02, -1       # decrement the loop counter
+14 40 ff fb  //            bne  $02, $00, top      #  and jmp to top if not finished
+
+08 10 00 0c  //            j    exit               # jump around a halt instruction
+00 00 00 0d  //            break
+
+3c 0e 5a 5a  // exit:      lui  $14, 0x5A5A
+35 ce 3c 3c  //            ori  $14, 0x3C3C        # LI   R14,  0x5A5A3C3C
+00 00 00 0d  //            break
+

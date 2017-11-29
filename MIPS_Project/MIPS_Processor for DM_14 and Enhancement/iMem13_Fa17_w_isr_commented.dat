@@ -1,0 +1,61 @@
+@0	 
+00 00 00 1f  // main:      setie
+3c 01 12 34  //            lui  $01, 0x1234
+34 21 56 78  //            ori  $01, 0x5678      # LI  R01,  0x12345678
+3c 02 87 65  //            lui  $02, 0x8765
+34 42 43 21  //            ori  $02, 0x4321      # LI  R02,  0x87654321
+3c 03 ab cd  //            lui  $03, 0xABCD
+34 63 ef 01  //            ori  $03, 0xEF01      # LI  R03,  0xABCDEF01
+3c 04 01 fe  //            lui  $04, 0x01FE
+34 84 dc ba  //            ori  $04, 0xDCBA      # LI  R04,  0x01FEDCBA
+3c 05 5a 5a  //            lui  $05, 0x5A5A
+34 a5 5a 5a  //            ori  $05, 0x5A5A      # LI  R05,  0x5A5A5A5A
+3c 06 ff ff  //            lui  $06, 0xFFFF
+34 c6 ff ff  //            ori  $06, 0xFFFF      # LI  R06,  0xFFFFFFFF
+3c 07 ff ff  //            lui  $07, 0xFFFF
+34 e7 ff 00  //            ori  $07, 0xFF00      # LI  R07,  0xFFFFFF00
+
+00 c7 40 20  //            add  $08, $06, $07
+00 c8 48 20  //            add  $09, $06, $08
+00 c9 50 20  //            add  $10, $06, $09
+00 ca 58 20  //            add  $11, $06, $10
+00 cb 60 20  //            add  $12, $06, $11
+00 cc 68 20  //            add  $13, $06, $12
+00 cd 70 20  //            add  $14, $06, $13
+00 ce 78 20  //            add  $15, $06, $14
+
+3c 07 10 01  //            lui  $07, 0x1001
+34 e7 03 f0  //            ori  $07, 0x03F0      # LI   R07,  0x100103F0
+ac ef 00 00  //            sw   $15, 0($07)      # ST  [R07], R15
+00 00 00 0d  //            break
+
+@200
+                         //************************************************
+                         // In this ISR, we will implement writing
+                         // some patterns to the IO space, and then
+                         // reading them back.
+                         // Note: this "ISR" expects the "return address"
+                         //       to have been saved in $ra (not the stack)
+                         //************************************************
+3c 10 10 01  // isr:       lui    $16, 0x1001      #load destination IO address
+36 10 00 c0  //            ori    $16, 0x00C0      #  0x100100C0 into r16
+3c 11 80 00  //            lui    $17, 0x8000      #initialize the pattern of
+36 31 ff ff  //            ori    $17, 0xFFFF      #  0x8000FFFF into r17
+20 12 00 10  //            addi   $18, $0, 0x10    #loop counter set to 16
+
+76 11 00 00  // out_IO:    output $17, 0($16)      # output  [R16], R17
+00 11 88 83  //            sra    $17, $17, 2      # change the pattern by shifting twice
+22 10 00 04  //            addi   $16, $16, 4      # increment the memory pointer 4 bytes
+22 52 ff ff  //            addi   $18, $18, -1     # decrement the loop counter
+16 40 ff fb  //            bne    $18, $00, out_IO #  and jmp to top if not finished
+
+3c 10 10 01  //            lui    $16, 0x1001      #load source IO address
+36 10 00 c0  //            ori    $16, 0x00C0      #  0x100100C0 into r16
+72 13 00 00  //            input  $19,  0($16)     #  and input from 6
+72 14 00 04  //            input  $20,  4($16)     #    the IO locations, 
+72 15 00 08  //            input  $21,  8($16)     #    starting from 0xC0
+72 16 00 0c  //            input  $22, 12($16)
+72 17 00 10  //            input  $23, 16($16)
+72 18 00 14  //            input  $24, 20($16)
+03 e0 00 08  //            jr     $31              # return from interrupt (v1, using $ra)
+

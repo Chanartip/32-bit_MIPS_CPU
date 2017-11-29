@@ -1,0 +1,67 @@
+@0
+3c 0f 10 01  // main:      lui  $15, 0x1001
+35 ef 00 00  //            ori  $15, 0x0000        # $r15 <-- 0x10010000  (source pointer)
+8d e1 00 00  //            lw   $01, 00($15)       # $r01 <--  264465 
+8d e2 00 04  //            lw   $02, 04($15)       # $r02 <--    1000
+8d e3 00 08  //            lw   $03, 08($15)       # $r03 <-- -264465
+8d e4 00 0c  //            lw   $04, 12($15)       # $r04 <--   -1000
+8d e5 00 10  //            lw   $05, 16($15)       # $r05 <--     264   Quot1,4    w01 div w02, w03 div w04
+8d e6 00 14  //            lw   $06, 20($15)       # $r06 <--     465   Rem 1,3    w01 rem w02, w01 rem w04
+8d e7 00 18  //            lw   $07, 24($15)       # $r07 <--    -264   Quot2,3    w03 div w02, w01 div w04
+8d e8 00 1c  //            lw   $08, 28($15)       # $r08 <--    -465   Rem 2,4    w03 re0 w02, w03 rem w04
+
+00 22 00 1a  //            div  $01, $02
+00 00 48 12  //            mflo $09                # rs=pos / rt=pos, rem=pos quot=pos
+00 00 50 10  //            mfhi $10
+15 25 00 16  //            bne  $09, $05, fail1Q
+15 46 00 18  //            bne  $10, $06, fail1R
+
+00 62 00 1a  //            div  $03, $02
+00 00 48 12  //            mflo $09                # rs=neg / rt=pos, rem=neg quot=neg
+00 00 50 10  //            mfhi $10
+15 27 00 17  //            bne  $09, $07, fail2Q
+15 48 00 19  //            bne  $10, $08, fail2R
+
+00 24 00 1a  //            div  $01, $04
+00 00 48 12  //            mflo $09                # rs=pos / rt=neg, rem=pos quot=neg
+00 00 50 10  //            mfhi $10
+15 27 00 18  //            bne  $09, $07, fail3Q
+15 46 00 1a  //            bne  $10, $06, fail3R
+
+00 64 00 1a  //            div  $03, $04
+00 00 48 12  //            mflo $09                # rs=neg / rt=neg, rem=neg quot=pos
+00 00 50 10  //            mfhi $10
+15 25 00 19  //            bne  $09, $05, fail4Q
+15 48 00 1b  //            bne  $10, $08, fail4R
+
+3c 0b 00 00  // pass:      lui  $11, 0x0000
+35 6b 00 00  //            ori  $11, 0x0000        # $r11 <-- 0x00000000  (Pass flag)
+00 0b 60 20  //            add  $12, $00, $11      # $r12 <-- Pass
+00 0b 68 20  //            add  $13, $00, $11      # $r13 <-- Pass
+00 0b 70 20  //            add  $14, $00, $11      # $r14 <-- Pass
+00 00 00 0d  //            break
+
+3c 0e ff ff  // fail1Q:    lui  $14, 0xFFFF
+35 ce ff ff  //            ori  $14, 0xFFFF        # $r14 <-- 0xFFFFFFFF  (Fail flag 1 Quot)
+00 00 00 0d  //            break
+3c 0e ff ff  // fail1R:    lui  $14, 0xFFFF
+35 ce ff fe  //            ori  $14, 0xFFFE        # $r14 <-- 0xFFFFFFFE  (Fail flag 1 Rem)
+00 00 00 0d  //            break
+3c 0e ff ff  // fail2Q:    lui  $14, 0xFFFF
+35 ce ff fd  //            ori  $14, 0xFFFD        # $r14 <-- 0xFFFFFFFD  (Fail flag 2 Quot)
+00 00 00 0d  //            break
+3c 0e ff ff  // fail2R:    lui  $14, 0xFFFF
+35 ce ff fc  //            ori  $14, 0xFFFC        # $r14 <-- 0xFFFFFFFC  (Fail flag 2 Rem)
+00 00 00 0d  //            break
+3c 0e ff ff  // fail3Q:    lui  $14, 0xFFFF
+35 ce ff fb  //            ori  $14, 0xFFFB        # $r14 <-- 0xFFFFFFFB  (Fail flag 3 Quot)
+00 00 00 0d  //            break
+3c 0e ff ff  // fail3R:    lui  $14, 0xFFFF
+35 ce ff fa  //            ori  $14, 0xFFFA        # $r14 <-- 0xFFFFFFFA  (Fail flag 3 Rem)
+00 00 00 0d  //            break
+3c 0e ff ff  // fail4Q:    lui  $14, 0xFFFF
+35 ce ff f9  //            ori  $14, 0xFFF9        # $r14 <-- 0xFFFFFFF9  (Fail flag 4 Quot)
+00 00 00 0d  //            break
+3c 0e ff ff  // fail4R:    lui  $14, 0xFFFF
+35 ce ff f8  //            ori  $14, 0xFFF8        # $r14 <-- 0xFFFFFFF8  (Fail flag 4 Rem)
+00 00 00 0d  //            break

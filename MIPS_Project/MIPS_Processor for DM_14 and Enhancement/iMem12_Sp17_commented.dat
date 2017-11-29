@@ -1,0 +1,47 @@
+@0
+3c 0f 10 01  // main:      lui  $15, 0x1001
+35 ef 00 c0  //            ori  $15, 0x00C0        # $r15 <-- 0x100100C0  (dest pointer)
+
+20 01 ff 8a  //            addi $01, $00, -118     # $r01 <-- 0xFFFFFF8A
+20 02 00 8a  //            addi $02  $00,  138     # $r02 <-- 0x0000008A
+0c 10 00 08  //            jal  blt_tests
+ad e1 00 18  //            sw   $01, 0x18($15)     # M[D8] <-- 0xFFFFFF8A
+ad e2 00 1c  //            sw   $02, 0x1C($15)     # M[DC] <-- 0x0000008A
+00 00 00 0d  //            break
+
+18 20 00 02  // blt_tests: blez $01, blez_p1       # this should branch
+20 0e ff ff  //            addi $14, $00, -1       # fail flag1 r14 <-- FFFF_FFFF
+00 00 00 0d  //            break
+20 03 00 c0  // blez_p1:   addi $03, $00, 0xC0     # pass flag1 M[C0] <-- C0
+ad e3 00 00  //            sw   $03, 0x00($15)
+18 40 00 03  //            blez $02, blez_f2       # this should not branch
+20 04 00 c4  //            addi $04, $00, 0xC4     # pass flag2 M[C4] <-- C4
+ad e4 00 04  //            sw   $04, 0x04($15)
+08 10 00 13  //            j    blez_p2
+20 0e ff fe  // blez_f2:   addi $14, $00, -2       # fail flag2 r14 <-- FFFF_FFFE
+00 00 00 0d  //            break
+18 00 00 02  // blez_p2:   blez $0, blez_p3        # this should branch
+20 0e ff fd  //            addi $14, $00, -3       # fail flag3 r14 <-- FFFF_FFFD
+00 00 00 0d  //            break
+20 05 00 c8  // blez_p3:   addi $05, $00, 0xC8     # pass flag3 M[C8] <-- C8
+ad e5 00 08  //            sw   $05, 0x08($15)
+
+1c 40 00 02  //            bgtz $02, bgtz_p1       # this should pass
+20 0e ff fc  //            addi $14, $00, -4       # fail flag3 r14 <-- FFFF_FFFC
+00 00 00 0d  //            break
+20 06 00 cc  // bgtz_p1:   addi $06, $00, 0xCC     # pass flag4 M[C0] <-- CC
+ad e6 00 0c  //            sw   $06, 0x0C($15)
+1c 20 00 03  //            bgtz $01, bgtz_f2       # this should not branch
+20 07 00 d0  //            addi $07, $00, 0xD0     # pass flag5 M[D0] <-- D0
+ad e7 00 10  //            sw   $07, 0x10($15)
+08 10 00 23  //            j    bgtz_p2
+20 0e ff fb  // bgtz_f2:   addi $14, $00, -5       # fail flag5 r14 <-- FFFF_FFFB
+00 00 00 0d  //            break
+1c 20 00 03  // bgtz_p2:   bgtz $01, bgtz_f3       # this should not branch
+20 08 00 d4  //            addi $08, $00, 0xD4     # pass flag6 M[D0] <-- D4
+ad e8 00 14  //            sw   $08, 0x14($15)
+08 10 00 29  //            j    bgtz_p3
+20 0e ff fa  // bgtz_f3:   addi $14, $00, -6       # fail flag6 r14 <-- FFFF_FFFA
+00 00 00 0d  //            break
+20 0e 00 00  // bgtz_p3:   addi $14, $00, 0        # set $r14 to 0000_0000
+03 e0 00 08  //            jr   $31                # return from subroutine

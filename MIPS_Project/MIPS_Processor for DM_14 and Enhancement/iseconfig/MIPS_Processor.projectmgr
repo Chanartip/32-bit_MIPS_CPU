@@ -1,0 +1,135 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!--This is an ISE project configuration file.-->
+<!--It holds project specific layout data for the projectmgr plugin.-->
+<!--Copyright (c) 1995-2009 Xilinx, Inc.  All rights reserved.-->
+<Project version="2" owner="projectmgr" name="MIPS_Processor" >
+   <!--This is an ISE project configuration file.-->
+   <ItemView engineview="SynthesisOnly" guiview="Source" compilemode="AutoCompile" >
+      <ClosedNodes>
+         <ClosedNodesVersion>2</ClosedNodesVersion>
+         <ClosedNode>/CPU C:|Users|Charles|Dropbox|ISA Project|MIPS_Project|MIPS_Processor|CPU.v/idp - IDP</ClosedNode>
+         <ClosedNode>/CPU C:|Users|Charles|Dropbox|ISA Project|MIPS_Project|MIPS_Processor|CPU.v/iu - Instruction_Unit</ClosedNode>
+         <ClosedNode>/MIPS_CU_TB C:|Users|Charles|Dropbox|ISA Project|MIPS_Project|MIPS_Processor|MIPS_CU_TB.v/id - IDP/alu - ALU_32</ClosedNode>
+         <ClosedNode>/MIPS_CU_TB C:|Users|Charles|Dropbox|ISA Project|MIPS_Project|MIPS_Processor|MIPS_CU_TB.v/idp - IDP</ClosedNode>
+         <ClosedNode>/MIPS_CU_TB Y:|Dropbox|ISA Project|MIPS_Project|MIPS_Processor|MIPS_CU_TB.v/id - IDP</ClosedNode>
+         <ClosedNode>/MIPS_CU_TB Y:|Dropbox|ISA Project|MIPS_Project|MIPS_Processor|MIPS_CU_TB.v/id - IDP/alu - ALU_32</ClosedNode>
+         <ClosedNode>/MIPS_CU_TB Y:|Dropbox|ISA Project|MIPS_Project|MIPS_Processor|MIPS_CU_TB.v/iu - Instruction_Unit</ClosedNode>
+      </ClosedNodes>
+      <SelectedItems>
+         <SelectedItem>CPU (Y:/Dropbox/ISA Project/MIPS_Project/MIPS_Processor for DM_14 and Enhancement/CPU.v)</SelectedItem>
+      </SelectedItems>
+      <ScrollbarPosition orientation="vertical" >0</ScrollbarPosition>
+      <ScrollbarPosition orientation="horizontal" >0</ScrollbarPosition>
+      <ViewHeaderState orientation="horizontal" >000000ff00000000000000010000000100000000000000000000000000000000020200000001000000010000006400000149000000020000000000000000000000000200000064ffffffff000000810000000300000002000001490000000100000003000000000000000100000003</ViewHeaderState>
+      <UserChangedColumnWidths orientation="horizontal" >true</UserChangedColumnWidths>
+      <CurrentItem>CPU (Y:/Dropbox/ISA Project/MIPS_Project/MIPS_Processor for DM_14 and Enhancement/CPU.v)</CurrentItem>
+   </ItemView>
+   <ItemView engineview="SynthesisOnly" sourcetype="" guiview="Process" >
+      <ClosedNodes>
+         <ClosedNodesVersion>1</ClosedNodesVersion>
+         <ClosedNode>Design Utilities</ClosedNode>
+      </ClosedNodes>
+      <SelectedItems>
+         <SelectedItem/>
+      </SelectedItems>
+      <ScrollbarPosition orientation="vertical" >0</ScrollbarPosition>
+      <ScrollbarPosition orientation="horizontal" >0</ScrollbarPosition>
+      <ViewHeaderState orientation="horizontal" >000000ff0000000000000001000000010000000000000000000000000000000000000000000000010e000000010000000100000000000000000000000064ffffffff0000008100000000000000010000010e0000000100000000</ViewHeaderState>
+      <UserChangedColumnWidths orientation="horizontal" >false</UserChangedColumnWidths>
+      <CurrentItem/>
+   </ItemView>
+   <ItemView guiview="File" >
+      <ClosedNodes>
+         <ClosedNodesVersion>1</ClosedNodesVersion>
+      </ClosedNodes>
+      <SelectedItems/>
+      <ScrollbarPosition orientation="vertical" >0</ScrollbarPosition>
+      <ScrollbarPosition orientation="horizontal" >0</ScrollbarPosition>
+      <ViewHeaderState orientation="horizontal" >000000ff000000000000000100000000000000000100000000000000000000000000000000000002b3000000040101000100000000000000000000000064ffffffff000000810000000000000004000000420000000100000000000000240000000100000000000000660000000100000000000001e70000000100000000</ViewHeaderState>
+      <UserChangedColumnWidths orientation="horizontal" >false</UserChangedColumnWidths>
+      <CurrentItem>ALU_32.v</CurrentItem>
+   </ItemView>
+   <ItemView guiview="Library" >
+      <ClosedNodes>
+         <ClosedNodesVersion>1</ClosedNodesVersion>
+         <ClosedNode>work</ClosedNode>
+      </ClosedNodes>
+      <SelectedItems/>
+      <ScrollbarPosition orientation="vertical" >0</ScrollbarPosition>
+      <ScrollbarPosition orientation="horizontal" >0</ScrollbarPosition>
+      <ViewHeaderState orientation="horizontal" >000000ff00000000000000010000000000000000010000000000000000000000000000000000000109000000010001000100000000000000000000000064ffffffff000000810000000000000001000001090000000100000000</ViewHeaderState>
+      <UserChangedColumnWidths orientation="horizontal" >false</UserChangedColumnWidths>
+      <CurrentItem>work</CurrentItem>
+   </ItemView>
+   <ItemView engineview="SynthesisOnly" sourcetype="DESUT_VERILOG" guiview="Process" >
+      <ClosedNodes>
+         <ClosedNodesVersion>1</ClosedNodesVersion>
+         <ClosedNode>Configure Target Device</ClosedNode>
+         <ClosedNode>Design Utilities</ClosedNode>
+         <ClosedNode>Implement Design</ClosedNode>
+         <ClosedNode>User Constraints</ClosedNode>
+      </ClosedNodes>
+      <SelectedItems>
+         <SelectedItem></SelectedItem>
+      </SelectedItems>
+      <ScrollbarPosition orientation="vertical" >0</ScrollbarPosition>
+      <ScrollbarPosition orientation="horizontal" >0</ScrollbarPosition>
+      <ViewHeaderState orientation="horizontal" >000000ff0000000000000001000000010000000000000000000000000000000000000000000000013e000000010000000100000000000000000000000064ffffffff0000008100000000000000010000013e0000000100000000</ViewHeaderState>
+      <UserChangedColumnWidths orientation="horizontal" >false</UserChangedColumnWidths>
+      <CurrentItem></CurrentItem>
+   </ItemView>
+   <SourceProcessView>000000ff0000000000000002000000ea000000c101000000050100000002</SourceProcessView>
+   <CurrentView>Behavioral Simulation</CurrentView>
+   <ItemView engineview="BehavioralSim" guiview="Source" compilemode="AutoCompile" >
+      <ClosedNodes>
+         <ClosedNodesVersion>2</ClosedNodesVersion>
+         <ClosedNode>/CPU_Test_Module C:|Users|Charles|Dropbox|ISA Project|MIPS_Project|MIPS_Processor for DM_14|CPU_Test_Module.v/cpu - CPU/iu - Instruction_Unit</ClosedNode>
+         <ClosedNode>/CPU_Test_Module C:|Users|Charles|Dropbox|ISA Project|MIPS_Project|MIPS_Processor|CPU_Test_Module.v/cpu - CPU/idp - IDP/alu - ALU_32</ClosedNode>
+         <ClosedNode>/CPU_Test_Module C:|Users|Charles|Dropbox|ISA Project|MIPS_Project|MIPS_Processor|CPU_Test_Module.v/cpu - CPU/iu - Instruction_Unit</ClosedNode>
+         <ClosedNode>/CPU_Test_Module C:|Users|Charles|Dropbox|ISA Project|MIPS_Project|MIPS_Processor|CPU_Test_Module.v/uut - CPU</ClosedNode>
+         <ClosedNode>/CPU_Test_Module Y:|Dropbox|ISA Project|MIPS_Project|MIPS_Processor for DM_14 and Enhancement|CPU_Test_Module.v/cpu - CPU/idp - IDP</ClosedNode>
+         <ClosedNode>/CPU_Test_Module Y:|Dropbox|ISA Project|MIPS_Project|MIPS_Processor for DM_14 and Enhancement|CPU_Test_Module.v/cpu - CPU/iu - Instruction_Unit</ClosedNode>
+         <ClosedNode>/CPU_Test_Module Y:|Dropbox|ISA Project|MIPS_Project|MIPS_Processor for DM_14|CPU_Test_Module.v/cpu - CPU/idp - IDP</ClosedNode>
+         <ClosedNode>/CPU_Test_Module Y:|Dropbox|ISA Project|MIPS_Project|MIPS_Processor for DM_14|CPU_Test_Module.v/cpu - CPU/iu - Instruction_Unit</ClosedNode>
+         <ClosedNode>/MIPS_CU_TB C:|Users|Charles|Dropbox|ISA Project|MIPS_Project|MIPS_Processor|MIPS_CU_TB.v/id - IDP/alu - ALU_32</ClosedNode>
+         <ClosedNode>/MIPS_CU_TB C:|Users|Charles|Dropbox|ISA Project|MIPS_Project|MIPS_Processor|MIPS_CU_TB.v/iu - Instruction_Unit</ClosedNode>
+         <ClosedNode>/MIPS_CU_TB Y:|Dropbox|ISA Project|MIPS_Project|MIPS_Processor|MIPS_CU_TB.v/iu - Instruction_Unit</ClosedNode>
+      </ClosedNodes>
+      <SelectedItems>
+         <SelectedItem>mcu - MCU (Y:/Dropbox/ISA Project/MIPS_Project/MIPS_Processor for DM_14 and Enhancement/MCU.v)</SelectedItem>
+      </SelectedItems>
+      <ScrollbarPosition orientation="vertical" >0</ScrollbarPosition>
+      <ScrollbarPosition orientation="horizontal" >0</ScrollbarPosition>
+      <ViewHeaderState orientation="horizontal" >000000ff0000000000000001000000010000000000000000000000000000000002020000000100000001000000640000013d000000020000000000000000000000000200000064ffffffff0000008100000003000000020000013d0000000100000003000000000000000100000003</ViewHeaderState>
+      <UserChangedColumnWidths orientation="horizontal" >true</UserChangedColumnWidths>
+      <CurrentItem>mcu - MCU (Y:/Dropbox/ISA Project/MIPS_Project/MIPS_Processor for DM_14 and Enhancement/MCU.v)</CurrentItem>
+   </ItemView>
+   <ItemView engineview="BehavioralSim" sourcetype="" guiview="Process" >
+      <ClosedNodes>
+         <ClosedNodesVersion>1</ClosedNodesVersion>
+         <ClosedNode>Design Utilities</ClosedNode>
+      </ClosedNodes>
+      <SelectedItems>
+         <SelectedItem></SelectedItem>
+      </SelectedItems>
+      <ScrollbarPosition orientation="vertical" >0</ScrollbarPosition>
+      <ScrollbarPosition orientation="horizontal" >0</ScrollbarPosition>
+      <ViewHeaderState orientation="horizontal" >000000ff0000000000000001000000010000000000000000000000000000000000000000000000013e000000010000000100000000000000000000000064ffffffff0000008100000000000000010000013e0000000100000000</ViewHeaderState>
+      <UserChangedColumnWidths orientation="horizontal" >false</UserChangedColumnWidths>
+      <CurrentItem></CurrentItem>
+   </ItemView>
+   <ItemView engineview="BehavioralSim" sourcetype="DESUT_VERILOG" guiview="Process" >
+      <ClosedNodes>
+         <ClosedNodesVersion>1</ClosedNodesVersion>
+      </ClosedNodes>
+      <SelectedItems>
+         <SelectedItem></SelectedItem>
+      </SelectedItems>
+      <ScrollbarPosition orientation="vertical" >0</ScrollbarPosition>
+      <ScrollbarPosition orientation="horizontal" >0</ScrollbarPosition>
+      <ViewHeaderState orientation="horizontal" >000000ff0000000000000001000000010000000000000000000000000000000000000000000000013e000000010000000100000000000000000000000064ffffffff0000008100000000000000010000013e0000000100000000</ViewHeaderState>
+      <UserChangedColumnWidths orientation="horizontal" >false</UserChangedColumnWidths>
+      <CurrentItem></CurrentItem>
+   </ItemView>
+   <CopyAdditionalFiles/>
+</Project>

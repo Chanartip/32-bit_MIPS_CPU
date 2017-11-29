@@ -1,0 +1,48 @@
+@0
+3c 0f 10 01  // main:      lui  $15, 0x1001
+35 ef 00 00  //            ori  $15, 0x0000        # $r15 <-- 0x10010000 (src pointer)
+8d e1 00 00  //            lw   $01, 00($15)       # $r01 <--     25 
+8d e2 00 04  //            lw   $02, 04($15)       # $r02 <--   1000
+8d e3 00 08  //            lw   $03, 08($15)       # $r03 <--    -25
+8d e4 00 0c  //            lw   $04, 12($15)       # $r04 <--  -1000
+8d e5 00 10  //            lw   $05, 16($15)       # $r05 <--  25000
+8d e6 00 14  //            lw   $06, 20($15)       # $r06 <-- -25000
+8d e7 00 18  //            lw   $07, 24($15)       # $r07 <--     -1
+00 22 00 18  //            mult $01, $02
+00 00 40 12  //            mflo $08                # rs=pos rt=pos rd=pos
+14 a8 00 10  //            bne  $05, $08, fail1
+00 62 00 18  //            mult $03, $02
+00 00 48 12  //            mflo $09                # rs=neg rt=pos rd=neg
+00 00 50 10  //            mfhi $10
+14 c9 00 0f  //            bne  $06, $09, fail2L
+14 ea 00 11  //            bne  $07, $10, fail2H
+00 24 00 18  //            mult $01, $04
+00 00 58 12  //            mflo $11                # rs=pos rt=neg rd=neg
+00 00 60 10  //            mfhi $12
+14 cb 00 10  //            bne  $06, $11, fail3L
+14 ec 00 12  //            bne  $07, $12, fail3H
+00 64 00 18  //            mult $03, $04
+00 00 68 12  //            mflo $13                # rs=neg rt=neg rd=pos
+14 ad 00 12  //            bne  $05, $13, fail4
+
+3c 0e 00 00  // pass:      lui  $14, 0x0000
+35 ce 00 00  //            ori  $14, 0x0000        # $r14 <-- 0x00000000  (Pass flag)
+00 00 00 0d  //            break
+3c 0e ff ff  // fail1:     lui  $14, 0xFFFF
+35 ce ff ff  //            ori  $14, 0xFFFF        # $r14 <-- 0xFFFFFFFF  (Fail flag 1)
+00 00 00 0d  //            break
+3c 0e ff ff  // fail2L:    lui  $14, 0xFFFF
+35 ce ff fe  //            ori  $14, 0xFFFE        # $r14 <-- 0xFFFFFFFE  (Fail flag 2L)
+00 00 00 0d  //            break
+3c 0e ff ff  // fail2H:    lui  $14, 0xFFFF
+35 ce ff fd  //            ori  $14, 0xFFFD        # $r14 <-- 0xFFFFFFFD  (Fail flag 2H)
+00 00 00 0d  //            break
+3c 0e ff ff  // fail3L:    lui  $14, 0xFFFF
+35 ce ff fc  //            ori  $14, 0xFFFC        # $r14 <-- 0xFFFFFFFC  (Fail flag 3L)
+00 00 00 0d  //            break
+3c 0e ff ff  // fail3H:    lui  $14, 0xFFFF
+35 ce ff fb  //            ori  $14, 0xFFFB        # $r14 <-- 0xFFFFFFFB  (Fail flag 3H)
+00 00 00 0d  //            break
+3c 0e ff ff  // fail4:     lui  $14, 0xFFFF
+35 ce ff fa  //            ori  $14, 0xFFFA        # $r14 <-- 0xFFFFFFFA  (Fail flag 4)
+00 00 00 0d  //            break

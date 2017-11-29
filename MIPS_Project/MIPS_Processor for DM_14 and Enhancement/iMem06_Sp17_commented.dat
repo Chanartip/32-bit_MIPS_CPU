@@ -1,0 +1,28 @@
+@0
+3c 0f 10 01  // lui  $15, 0x1001
+35 ef 00 00  // ori  $15, 0x0000        # LI   R15,  0x10010000  dest data pointer
+3c 0e 10 01  // lui  $14, 0x1001
+35 ce 00 c0  // ori  $14, 0x00C0        # LI   R14,  0x100100C0  dest data pointer
+20 0d 00 10  // addi $13, $00, 16       # LI   R13,  16          loop counter
+8d e1 00 04  // lw   $01, 04($15)       # Load
+8d e2 00 08  // lw   $02, 08($15)       #   R01
+8d e3 00 0c  // lw   $03, 12($15)       #     to
+8d e4 00 10  // lw   $04, 16($15)       #      R12
+8d e5 00 14  // lw   $05, 20($15)
+8d e6 00 18  // lw   $06, 24($15)
+8d e7 00 1c  // lw   $07, 28($15)
+8d e8 00 20  // lw   $08, 32($15)
+8d e9 00 24  // lw   $09, 36($15)
+8d ea 00 28  // lw   $10, 40($15)
+8d eb 00 2c  // lw   $11, 44($15)
+8d ec 00 30  // lw   $12, 48($15)
+
+             // mem2mem: 
+8d f1 00 00  // lw   $17, 00($15)       # do mem to
+ad d1 00 00  // sw   $17, 00($14)       #   mem transfer
+21 ef 00 04  // addi $15, $15, 04       # bump both source
+21 ce 00 04  // addi $14, $14, 04       #   and dest pointers
+21 ad ff ff  // addi $13, $13, -1       # dec the loop counter
+15 a0 ff fa  // bne  $13, $00, mem2mem  #   and continue till done
+00 00 00 0d  // break
+

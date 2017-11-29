@@ -1,0 +1,74 @@
+@0
+3c 0f 10 01  // main:      lui  $15, 0x1001
+35 ef 00 c0  //            ori  $15, 0x00C0          # $r15 <-- 0x100100C0  (dest pointer)
+20 01 ff 8a  //            addi $01, $00, -118       # $r01 <-- 0xFFFFFF8A
+20 02 00 8a  //            addi $02  $00,  138       # $r02 <-- 0x0000008A
+0c 10 00 1a  //            jal  sltiu_tests
+
+3c 0d ff ff  //            lui  $13, 0xFFFF
+35 ad 55 55  //            ori  $13, 0x5555          # $r13 <-- 0xFFFF5555  (pattern1)
+3c 0c ff ff  //            lui  $12, 0xFFFF
+35 8c fa f5  //            ori  $12, 0xFAF5          # $r12 <-- 0xFFFFFAF5  (pattern2)
+3c 0b ff ff  //            lui  $11, 0xFFFF
+35 6b ff ff  //            ori  $11, 0xFFFF          # $r11 <-- 0xFFFFFFFF  (pattern3)
+3c 0a 00 00  //            lui  $10, 0x0000
+35 4a f0 f0  //            ori  $10, 0xF0F0          # $r10 <-- 0x0000F0F0  (pattern4)
+
+39 a9 aa aa  //            xori $09, $13, 0xAAAA     # $r09 <-- 0xFFFFFFFF
+01 2b 40 22  //            sub  $08, $09, $11        # $r00 <-- 0
+11 00 00 02  //            beq  $08, $00, xor_p1     # should branch
+20 0e ff f9  //            addi $14, $00, -7         # fail flag7 r14 <-- FFFF_FFF9
+00 00 00 0d  //            break
+31 87 f5 fa  // xor_p1:    andi $07, $12, 0xF5FA     # $r07 <-- 0x0000F0F0
+00 ea 40 22  //            sub  $08, $07, $10
+11 00 00 02  //            beq  $08, $00, xor_p2     # should branch
+20 0e ff f8  //            addi $14, $00, -8         # fail flag8 r14 <-- FFFF_FFF8
+00 00 00 0d  //            break
+ad e1 00 18  // xor_p2:    sw   $01, 0x18($15)       # M[D8] <-- FFFFFF8A
+00 00 00 0d  //            break                     # should stop here, having
+00 00 00 0d  //            break                     #   completed all the tests
+
+             // sltiu_tests:
+2c 23 ff 8b  //            sltiu  $03, $01, -117     # for unsigned# r01 < se(0xFF8B)
+14 60 00 02  //            bne    $03, $00, slt1_p1  #   thus, we should branch
+20 0e ff ff  //            addi   $14, $00, -1       # fail flag1 r14 <-- FFFF_FFFF
+00 00 00 0d  //            break
+20 04 00 c0  // slt1_p1:   addi   $04, $00, 0xC0     # pass flag1 M[C0] <-- C0
+ad e4 00 00  //            sw     $04, 0x00($15)
+
+2c 23 ff 89  //            sltiu  $03, $01, -119     # for unsigned# r01 !< se(0xFF89)
+10 60 00 02  //            beq    $03, $00, slt_p2   #   thus, we should branch
+20 0e ff fe  //            addi   $14, $00, -2       # fail flag2 r14 <-- FFFF_FFFE
+00 00 00 0d  //            break
+20 05 00 c4  // slt_p2:    addi   $05, $00, 0xC4     # pass flag2 M[C4] <-- C4
+ad e5 00 04  //            sw     $05, 0x04($15)
+
+2c 23 ff 8a  //            sltiu  $03, $01, -118     # for unsigned# r01 !< se(0xFF8A)
+10 60 00 02  //            beq    $03, $00, slt_p3   #   thus, we should branch
+20 0e ff fd  //            addi   $14, $00, -3       # fail flag3 r14 <-- FFFF_FFFD
+00 00 00 0d  //            break
+20 06 00 c8  // slt_p3:    addi   $06, $00, 0xC8     # pass flag3 M[C8] <-- C8
+ad e6 00 08  //            sw     $06, 0x08($15)
+
+2c 43 00 8b  //            sltiu  $03, $02, 0x008B   # for unsigned# r02 < se(0x008B)
+14 60 00 02  //            bne    $03, $00, slt1_p4  #   thus, we should branch
+20 0e ff fc  //            addi   $14, $00, -4       # fail flag4 r14 <-- FFFF_FFFC
+00 00 00 0d  //            break
+20 07 00 cc  // slt1_p4:   addi   $07, $00, 0xCC     # pass flag4 M[CC] <-- CC
+ad e7 00 0c  //            sw     $07, 0x0C($15)
+
+2c 43 00 89  //            sltiu  $03, $02, 0x0089   # for unsigned# r02 !< se(0x0089)
+10 60 00 02  //            beq    $03, $00, slt_p5   #   thus, we should branch
+20 0e ff fb  //            addi   $14, $00, -5       # fail flag5 r14 <-- FFFF_FFFB
+00 00 00 0d  //            break
+20 08 00 d0  // slt_p5:    addi   $08, $00, 0xD0     # pass flag5 M[D0] <-- D0
+ad e8 00 10  //            sw     $08 0x10($15)
+
+2c 43 00 8a  //            sltiu  $03, $02, 0x008A   # for unsigned# r02 !< se(0x008A)
+10 60 00 02  //            beq    $03, $00, slt_p6   #   thus, we should branch
+20 0e ff fa  //            addi   $14, $00, -6       # fail flag6 r14 <-- FFFF_FFFA
+00 00 00 0d  //            break
+20 06 00 d4  // slt_p6:    addi   $06, $00, 0xD4     # pass flag6 M[D4] <-- D4
+ad e6 00 14  //            sw     $06, 0x14($15)
+20 0e 00 00  //            addi   $14, $00, 0        # set $r14 to 0000_0000
+03 e0 00 08  //            jr   $31                  # return from subroutine

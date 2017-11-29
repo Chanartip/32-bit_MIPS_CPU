@@ -1,0 +1,1 @@
+-intstyle "ise" -incremental -lib "unisims_ver" -lib "unimacro_ver" -lib "xilinxcorelib_ver" -lib "secureip" -o "Y:/Dropbox/ISA Project/MIPS_Project/MIPS_Processor for DM_14 and Enhancement/CPU_Test_Module_isim_beh.exe" -prj "Y:/Dropbox/ISA Project/MIPS_Project/MIPS_Processor for DM_14 and Enhancement/CPU_Test_Module_beh.prj" "work.CPU_Test_Module" "work.glbl" 

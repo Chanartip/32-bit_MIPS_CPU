@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="C:/Users/Charles/Dropbox/ISA Project/MIPS_Project/MIPS_Processor/CPU_Test_Module_isim_beh.wdb" id="1" type="auto">
+         <top_modules>
+            <top_module name="CPU_Test_Module" />
+            <top_module name="glbl" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <WVObjectSize size="12" />
+   <wvobject fp_name="/CPU_Test_Module/DM_out" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">DM_out[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DM_out[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/CPU_Test_Module/int_ack" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">int_ack</obj_property>
+      <obj_property name="ObjectShortName">int_ack</obj_property>
+   </wvobject>
+   <wvobject fp_name="/CPU_Test_Module/MAddr" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">MAddr[31:0]</obj_property>
+      <obj_property name="ObjectShortName">MAddr[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/CPU_Test_Module/idp_out" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">idp_out[31:0]</obj_property>
+      <obj_property name="ObjectShortName">idp_out[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/CPU_Test_Module/dm_cs" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">dm_cs</obj_property>
+      <obj_property name="ObjectShortName">dm_cs</obj_property>
+   </wvobject>
+   <wvobject fp_name="/CPU_Test_Module/dm_rd" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">dm_rd</obj_property>
+      <obj_property name="ObjectShortName">dm_rd</obj_property>
+   </wvobject>
+   <wvobject fp_name="/CPU_Test_Module/dm_wr" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">dm_wr</obj_property>
+      <obj_property name="ObjectShortName">dm_wr</obj_property>
+   </wvobject>
+   <wvobject fp_name="/CPU_Test_Module/reset" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">reset</obj_property>
+      <obj_property name="ObjectShortName">reset</obj_property>
+   </wvobject>
+   <wvobject fp_name="/CPU_Test_Module/intr" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">intr</obj_property>
+      <obj_property name="ObjectShortName">intr</obj_property>
+   </wvobject>
+   <wvobject fp_name="/CPU_Test_Module/sys_clk" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">sys_clk</obj_property>
+      <obj_property name="ObjectShortName">sys_clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/CPU_Test_Module/cpu/mcu/z" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">z</obj_property>
+      <obj_property name="ObjectShortName">z</obj_property>
+   </wvobject>
+   <wvobject fp_name="/CPU_Test_Module/cpu/mcu/psz" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">psz</obj_property>
+      <obj_property name="ObjectShortName">psz</obj_property>
+   </wvobject>
+</wave_config>

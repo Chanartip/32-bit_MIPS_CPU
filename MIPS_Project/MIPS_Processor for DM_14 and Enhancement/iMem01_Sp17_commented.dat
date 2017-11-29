@@ -1,0 +1,27 @@
+@0
+3c 01 12 34  // main:      lui  $01, 0x1234
+34 21 56 78  //            ori  $01, 0x5678        # LI   R01,  0x12345678
+3c 02 87 65  //            lui  $02, 0x8765
+34 42 43 21  //            ori  $02, 0x4321        # LI   R02,  0x87654321
+00 01 18 20  //            add  $03, $00, $01      # COPY R03, R01
+
+10 22 00 01  //            beq  $01, $02, no_eq    # should not branch
+10 23 00 03  //            beq  $01, $03, yes_eq   # should branch
+3c 0e ff ff  // no_eq:     lui  $14, 0xFFFF           
+35 ce ff ff  //            ori  $14, 0xFFFF        # LI   R14,  0xFFFFFFFF  "fail flag"
+00 00 00 0d  //            breaK
+
+00 00 70 20  // yes_eq:    add  $14, $0, $0        # CLR  R14  "pass flag"
+
+14 23 00 01  //            bne  $01, $03, no_ne    # should not branch
+14 22 00 03  //            bne  $01, $02, yes_ne   # should branch
+3c 0f ff ff  // no_ne:     lui  $15, 0xFFFF
+35 ef ff ff  //            ori  $15, 0xFFFF        # LI   R15,  0xFFFFFFFF  "fail flag"
+00 00 00 0d  //            break
+
+00 00 78 20  // yes_ne:    add  $15, $0, $0        # CLR  R15  "pass flag"
+3c 0d 10 01  //            lui  $13, 0x1001
+35 ad 00 c0  //            ori  $13, 0x00C0        # LI   R13,  0x100100C0
+ad a1 00 00  //            sw   $01, 0($13)        # ST  [R13], R01
+00 00 00 0d  //            break
+

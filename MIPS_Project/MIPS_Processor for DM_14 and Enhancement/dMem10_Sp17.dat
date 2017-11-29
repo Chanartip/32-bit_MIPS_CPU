@@ -1,0 +1,24 @@
+@0             // Big Endian Format
+
+00 04 09 11    // 0x00:03  //word 00 =  264465 
+00 00 03 E8    // 0x04:07  //word 01 =    1000
+FF FB F6 EF    // 0x08:0B  //word 02 = -264465
+FF FF FC 18    // 0x0C:0F  //word 03 =   -1000
+00 00 01 08    // 0x10:13  //word 04 =     264   Quot1,4    w00 div w01, w02 div w03
+00 00 01 D1    // 0x14:17  //word 05 =     465   Rem 1,3    w00 mod w01, w00 mod w03
+FF FF FE F8    // 0x18:1B  //word 06 =    -264   Quot2,3    w02 div w01, w00 div w03
+FF FF FE 2F    // 0x1C:1F  //word 07 =    -465   Rem 2,4    w02 mod w01, w02 mod w03
+00 00 00 08    // 0x20:23  //word 08 =    
+00 00 00 09    // 0x24:27  //word 09 =     
+00 00 00 0A    // 0x28:2B  //word 10 =     
+00 00 00 0B    // 0x2C:2F  //word 11 =    
+00 00 00 0C    // 0x30:33  //word 12 = 
+00 00 00 0D    // 0x34:37  //word 13 =
+00 00 00 0E    // 0x38:3B  //word 14 =
+00 00 00 0F    // 0x3C:3F  //word 15 =  
+
+@1CC
+AB CD EF 01    // 0x1CC:1CF
+
+@3F8
+00 00 00 00    // 0x3F8:3FB

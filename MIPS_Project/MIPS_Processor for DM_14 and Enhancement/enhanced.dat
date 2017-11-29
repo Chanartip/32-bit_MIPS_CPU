@@ -1,0 +1,51 @@
+@0
+3c 01 12 34 	//		lui  $01, 0x1234 
+34 21 56 78 	//		ori  $01, 0x5678 	# 	  R01 <- 0x12345678 
+7c 01 00 09 	//		push $01         	# dM[3F8] <- 0x12345678
+3c 02 87 65		// 		lui  $02, 0x8765
+34 42 43 21		// 		ori  $02, 0x4321	#     R02 <- 0x87654321
+7c 02 00 09 	//		push $02         	# dM[3F4] <- 0x87654321
+3c 03 ab cd		//      lui  $03, 0xABCD
+34 63 ef 01		//      ori  $03, 0xEF01    # 	  R03 <- 0xABCDEF01
+7c 03 00 09 	//		push $03         	# dM[3F0] <- 0xABCDEF01
+
+7c 00 00 08		//		nop 
+7c 04 00 0a 	//		pop  $04         	# 	  R04 <- 0xABCDEF01 
+7c 05 00 0a 	//		pop  $05         	# 	  R05 <- 0x87654321
+7c 06 00 0a 	//		pop  $06         	# 	  R06 <- 0x12345678 
+b0 22 00 03 	//		blt  $02, $01, blt_p# (R01<R02)? should branch
+3c 10 ff ff		//		lui  $16, 0xFFFF 
+36 10 ff ff		//		ori  $16, 0xFFFF 	# 	  R16 <- 0xFFFFFFFF FAIL
+00 00 00 0d 	//break
+
+3c 10 11 11		//blt_p:lui  $16, 0x1111 
+36 10 11 11		//		ori  $16, 0x1111 	# 	  R16 <- 0x11111111 PASS BLT
+b4 c0 00 03 	//		bge  $00, $06, bge_p# (R06>=R00)? should branch
+3c 11 ff ff		//		lui  $17, 0xFFFF 
+36 31 ff ff		//		ori  $17, 0xFFFF 	# 	  R17 <- 0xFFFFFFFF FAIL
+00 00 00 0d 	//break
+
+7e 11 00 07 	//bge_p:mov  $17, $16 		# 	  R17 <- 0x11111111 PASS BGE
+7c 11 38 81		//		ROTL $07, $17, 2	#	  R07 <- 0x44444444
+7c 11 40 c2		//		ROTR $08, $17, 3	#	  R08 <- 0x22222222
+
+20 0d 00 07 	//		addi $13, $00, 7 	# loop counter set to 7
+20 0e 00 07		//		addi $14, $00, 7	# loop counter_2 set to 7
+3c 09 00 00		//      lui  $09, 0x0000	# initialize walking one's
+35 29 00 01		//      ori  $09, 0x0001   	#	pattern on R09
+3c 0f 10 01		//      lui  $15, 0x1001    #load destination IO address
+35 ef 00 c0		//      ori  $15, 0x00C0    #  0x100100C0 into r15
+
+75 e9 00 00  	//IO:	output $09, 0($15)	# output  [R15], R09
+00 09 49 00  	//		sll  $09, $09, 4    # change the pattern by shifting left four times
+21 ef 00 04  	//      addi $15, $15, 4 	# increment the memory pointer 4 bytes
+b9 ad ff fc 	//		djnz $13, IO 		# loop = -4 = fffc 
+7d 2a 00 07		//		mov  $10, $09		# 	  R10 <- R09
+
+ad ea 00 00  	//DM:	sw   $10, 0($15)	# store word  [R15], R09
+00 0a 51 02  	//		srl  $10, $10, 4    # change the pattern by shifting right four times
+21 ef 00 04  	//      addi $15, $15, 4 	# increment the memory pointer 4 bytes
+b9 ce ff fc 	//		djnz $14, DM 		# loop = -4 = fffc 
+
+7c 01 00 05		//		clr	 $01			# clear R01 content
+00 00 00 0d 	//break 
